@@ -17,6 +17,17 @@ export const fakeWrapper = <T>(data: T) => {
   }
 }
 
+function getRandomBoolean(probability = 50): boolean {
+  if (probability < 0 || probability > 100) {
+    throw new Error('Probability must be between 0 and 100.')
+  }
+
+  const randomNumber = Math.random() * 100 // Generate random number between 0 and 100
+  return randomNumber < probability // Return true if randomNumber is less than probability
+}
+
+export default getRandomBoolean
+
 export function formatTimeDifference(timestamp: number): string {
   const now = Date.now() // 取得目前的時間戳記
   const diffInMillis = Math.abs(now - timestamp) // 計算時間差的毫秒數
@@ -30,10 +41,6 @@ export function formatTimeDifference(timestamp: number): string {
   const minutes = Math.floor((diffInMillis % millisInHour) / millisInMinute) // 計算剩餘分鐘數
 
   return `${days}天${hours}小時${minutes}分`
-}
-
-export function pipe<T>(...fns: Array<(arg: T) => T>): (arg: T) => T {
-  return (arg: T): T => fns.reduce((prev, fn) => fn(prev), arg)
 }
 
 export function createEnumList<T extends { [key: string]: string | number }>(

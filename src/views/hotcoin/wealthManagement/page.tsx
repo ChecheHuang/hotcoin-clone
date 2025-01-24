@@ -13,10 +13,10 @@ import mockAxios from '@/mock/mock'
 import { imgUrl } from '@/resources/imgUrl'
 import { wealthManagementImg } from '@/resources/wealthManagement/img'
 
-import { DataTable } from './_components/DataTable'
 import Footer from './_components/Footer'
 import QA from './_components/QA'
-import { DataType, ProductTypeEnum } from './_types'
+import { DataTable } from './_components/WealthManagementDataTable'
+import { ProductTypeEnum, WealthManagementDataType } from './_types'
 
 const list = createEnumList(ProductTypeEnum)
 
@@ -28,7 +28,7 @@ const WealthManagement = () => {
   const { data } = useQuery({
     queryKey: ['wealthManagement', productType],
     queryFn: async () => {
-      const result = await mockAxios.get<FetchData<DataType[]>>(
+      const result = await mockAxios.get<FetchData<WealthManagementDataType[]>>(
         'http://localhost:3000/wealthManagement',
         {
           params: { productType },
@@ -36,10 +36,10 @@ const WealthManagement = () => {
       )
       return result.data.data
     },
-    placeholderData: [] as DataType[],
+    placeholderData: [] as WealthManagementDataType[],
   })
 
-  const columns: ColumnDef<DataType>[] = [
+  const columns: ColumnDef<WealthManagementDataType>[] = [
     {
       accessorKey: 'productName',
       header: () => {
@@ -64,13 +64,13 @@ const WealthManagement = () => {
       accessorKey: 'profitRate',
       header: ({ column }) => {
         return (
-          <Button
-            variant="ghost"
+          <div
+            className="flex cursor-pointer items-center justify-start text-xs"
             onClick={() => column.toggleSorting(column.getIsSorted() === 'asc')}
           >
             年化收益率
             <ArrowUpDown className="ml-2 h-4 w-4" />
-          </Button>
+          </div>
         )
       },
       cell: ({ row: { original: row } }) => {

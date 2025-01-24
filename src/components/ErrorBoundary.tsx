@@ -14,12 +14,12 @@ function MyErrorBoundary({ children }: { children: React.ReactNode }) {
 
     return (
       <div
-        className="flex  flex-col items-center justify-center bg-white"
+        className="flex flex-col items-center justify-center bg-white"
         role="alert"
       >
         <p>Something went wrong:</p>
         <div
-          className="w-full text-center whitespace-pre-wrap overflow-auto"
+          className="w-full overflow-auto whitespace-pre-wrap text-center"
           style={{ color: 'red' }}
         >
           {error.message}

@@ -15,6 +15,19 @@ export function map<A, B>(fn: Unary<A, B>) {
   }
 }
 
+export function flatMap<A, B>(fn: Unary<A, B[]>): (list: A[]) => B[] {
+  return function (list: A[]): B[] {
+    const result: B[] = []
+    for (const item of list) {
+      const subList = fn(item)
+      for (const subItem of subList) {
+        result.push(subItem)
+      }
+    }
+    return result
+  }
+}
+
 export function flatten<T>(array: Array<T | T[]>): T[] {
   return array.reduce<T[]>((acc, val) => {
     if (Array.isArray(val)) {
@@ -97,5 +110,17 @@ export function splitEvery(count: number) {
       idx += count
     }
     return result
+  }
+}
+
+export function slice<T>(start: number) {
+  return function (end: number) {
+    return function (list: T[]): T[] {
+      const result: T[] = []
+      for (let i = start; i < end && i < list.length; i++) {
+        result.push(list[i])
+      }
+      return result
+    }
   }
 }

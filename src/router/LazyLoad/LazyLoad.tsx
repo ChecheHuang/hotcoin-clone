@@ -17,7 +17,7 @@ export default function LazyLoad(
 
 function Loader() {
   return (
-    <div className="fixed top-0 left-0 w-full h-1 bg-gray-400">
+    <div className="bg-gray-400 fixed left-0 top-0 h-1 w-full">
       <div
         className={clsx(
           'h-full bg-gradient-to-r from-green-500 to-blue-500',

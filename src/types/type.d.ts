@@ -1,4 +1,4 @@
- type FetchData<T = any> = {
+type FetchData<T = any> = {
   data: T
   msg: string
   pageNum: number

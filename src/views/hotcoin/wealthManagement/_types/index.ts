@@ -1,4 +1,4 @@
-export type DataType = {
+export type WealthManagementDataType = {
   productId: number
   productName: string
   productType: number

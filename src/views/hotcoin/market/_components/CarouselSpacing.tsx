@@ -3,7 +3,6 @@ import { ChevronRight } from 'lucide-react'
 import { useQuery } from '@tanstack/react-query'
 
 import PercentageDisplay from '@/components/PercentageDisplay'
-import { Button } from '@/components/ui/button'
 import {
   Carousel,
   CarouselContent,
@@ -38,58 +37,57 @@ export function CarouselSpacing() {
     refetchInterval: 5000,
   })
 
-  console.table(data)
-
   return (
-    <Carousel className="mt-3 w-full">
-      <CarouselContent className="">
+    <Carousel className="mt-5 w-full">
+      <CarouselContent className="cursor-pointer">
         {data!.map(({ title, data }, index) => (
           <CarouselItem key={index} className="basis-1/4">
-            <div className="flex h-[263px] w-[289px] flex-col justify-around rounded-2xl border px-2 py-4">
-              <div className="flex items-center justify-between">
-                <div className="text-[24px]">{title}</div>
-                <Button variant="ghost">
-                  <ChevronRight className="h-6 w-6" />
-                </Button>
+            <div className="flex h-[263px] w-[289px] flex-col rounded-2xl border px-3">
+              <div className="flex items-center justify-between py-6">
+                <div className="text-[22px]">{title}</div>
+                <ChevronRight className="h-4 w-4 text-gray" />
               </div>
               <Table>
                 <TableHeader>
                   <TableRow className="border-none">
-                    <TableHead className="w-[100px] p-0 text-xs">
-                      交易對
+                    <TableHead className="h-[23px] w-[100px] p-0 text-xs">
+                      交易对
                     </TableHead>
-                    <TableHead className="p-0 text-right text-xs">
-                      最新價
+                    <TableHead className="h-[23px] p-0 text-right text-xs">
+                      最新价
                     </TableHead>
-                    <TableHead className="w-[70px] p-0 text-right text-xs">
-                      24H漲跌幅
+                    <TableHead className="h-[23px] w-[70px] p-0 text-right text-xs">
+                      24H涨跌幅
                     </TableHead>
                   </TableRow>
                 </TableHeader>
                 <TableBody>
                   {data.map(({ pair, price, change, time }) => (
                     <TableRow key={pair} className="border-none">
-                      <TableCell className="flex items-center gap-2 px-0">
+                      <TableCell className="flex h-[46px] items-center gap-2 px-0">
                         <img
-                          className="h-[20px] w-[20px]"
+                          className="h-[22px] w-[22px]"
                           alt=""
                           src={imgUrl[pair as keyof typeof imgUrl]}
                         />
-                        <div className="overflow-hidden text-ellipsis whitespace-nowrap">
+                        <div className="overflow-hidden text-ellipsis whitespace-nowrap text-sm">
                           {pair}
-                          <span className="text-[#d9d9d9]">/USDT</span>
+                          <span className="ml-1 text-xs text-gray">/USDT</span>
                         </div>
                       </TableCell>
                       {time ? (
-                        <TableCell colSpan={2} className="px-0 text-center">
+                        <TableCell
+                          colSpan={2}
+                          className="h-[46px] px-0 text-center"
+                        >
                           {formatTimeDifference(time)}
                         </TableCell>
                       ) : (
                         <>
-                          <TableCell className="px-0 text-right">
+                          <TableCell className="h-[46px] px-0 text-right">
                             {price}
                           </TableCell>
-                          <TableCell className="px-0 text-right">
+                          <TableCell className="h-[46px] px-0 text-right">
                             <PercentageDisplay value={change} />
                           </TableCell>
                         </>

@@ -3,6 +3,7 @@
   "semi": false,
   "endOfLine": "auto",
   "plugins": [
+    "prettier-plugin-organize-imports",
     "@trivago/prettier-plugin-sort-imports",
     "prettier-plugin-tailwindcss"
   ],

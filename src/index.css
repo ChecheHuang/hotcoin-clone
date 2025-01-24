@@ -13,14 +13,32 @@
 }
 
 ::-webkit-scrollbar-track {
-    background-color: #f1f1f1; /* 設定滑塊軌道顏色 */
+  background-color: #f1f1f1; /* 設定滑塊軌道顏色 */
 }
 
-body{
-  font-family: Roboto, PingFang SC, Arial, sans-serif, Helvetica Neue, Helvetica, Hiragino Sans GB, Microsoft YaHei, "\5FAE\8F6F\96C5\9ED1";
-  
+body {
+  font-family:
+    Roboto,
+    PingFang SC,
+    Arial,
+    sans-serif,
+    Helvetica Neue,
+    Helvetica,
+    Hiragino Sans GB,
+    Microsoft YaHei,
+    '\5FAE\8F6F\96C5\9ED1';
 }
-
+@layer utilities {
+  /* 隱藏 Chrome、Safari 和 Opera 的滾動條 */
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  /* 隱藏 IE、Edge 和 Firefox 的滾動條 */
+  .no-scrollbar {
+    -ms-overflow-style: none; /* IE 和 Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+}
 
 @layer base {
   :root {
@@ -76,7 +94,6 @@ body{
     --chart-4: 280 65% 60%;
     --chart-5: 340 75% 55%;
   }
-
 }
 
 @layer base {

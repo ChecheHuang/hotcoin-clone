@@ -1,8 +1,9 @@
 import mockAxios from 'axios'
 import MockAdapter from 'axios-mock-adapter'
 
-import { box } from '@/lib/fp'
-import { fakeWrapper, pipe } from '@/lib/utils'
+import { coinList, swiperTabs, tradingPairs } from '@/config/list'
+import { box, slice } from '@/lib/fp'
+import getRandomBoolean, { fakeWrapper } from '@/lib/utils'
 import { CarouselData } from '@/views/hotcoin/market/_types'
 
 import { wealthManagement } from './wealthManagement'
@@ -17,7 +18,7 @@ mock.onGet('http://localhost:3000/wealthManagement').reply((config) => {
     return item.productType === Number(productType)
   })
 
-  return [200, fakeWrapper(result)]
+  return [200, box(result).pipe(fakeWrapper).unwrap()]
 })
 
 const mockTimeStamp = getRandomTimestampWithinNextTwoDays()
@@ -130,7 +131,84 @@ mock.onGet('http://localhost:3000/market/carousel').reply((config) => {
   return [200, result]
 })
 
+mock.onGet('http://localhost:3000/market/spotPrice').reply((config) => {
+  const { pageParam, limit = 500, length = 50000 } = config.params
+
+  const items = Array.from({ length }, () => {
+    return {
+      tradingPairs: getRandomElementFromArray(tradingPairs),
+      coin: getRandomElementFromArray(coinList),
+      area: getRandomElementFromArray(swiperTabs),
+      riseAndFall: getRandomNumberString(),
+      ...generateMockMarketData(),
+      isShowX: getRandomBoolean(30),
+    }
+  })
+
+  const result = {
+    data: box(items)
+      .pipe(slice(pageParam)(pageParam + limit))
+      .unwrap(),
+    currentPage: pageParam,
+    nextPage: pageParam + limit < items.length ? pageParam + limit : null,
+  }
+
+  return [200, box(result).pipe(fakeWrapper).unwrap()]
+})
+
 export default mockAxios
+
+function generateMockMarketData() {
+  const highestPrice = Math.floor(Math.random() * 999999) + 1
+  const lowestPrice = Math.floor(Math.random() * highestPrice)
+  const latestPrice = Math.floor(
+    Math.random() * (highestPrice - lowestPrice) + lowestPrice,
+  )
+  const tradingVolume = Math.floor(Math.random() * (highestPrice * 10))
+
+  const decimalPlaces = Math.floor(Math.random() * 3) + 2 // 產生 2 到 4 的隨機小數位數
+
+  const formatNumber = (num: number) => {
+    const numStr = num.toFixed(decimalPlaces).toString()
+    const [integerPart, decimalPart] = numStr.split('.')
+    const formattedIntegerPart = integerPart.replace(
+      /\B(?=(\d{3})+(?!\d))/g,
+      ',',
+    )
+
+    if (!decimalPart) return formattedIntegerPart // 如果沒有小數部分直接返回
+
+    const hasNonZeroDecimal = /[1-9]/.test(decimalPart)
+    if (hasNonZeroDecimal) {
+      return `${formattedIntegerPart}.${decimalPart}`
+    } else {
+      // 如果小數部分都是0, 就隨機生成新的小數部分
+      const newDecimal = Math.random().toFixed(decimalPlaces).slice(2)
+      return `${formattedIntegerPart}.${newDecimal}`
+    }
+  }
+
+  return {
+    latestPrice: formatNumber(latestPrice),
+    highestPrice: formatNumber(highestPrice),
+    lowestPrice: formatNumber(lowestPrice),
+    tradingVolume,
+  }
+}
+function getRandomNumberString(): string {
+  const randomNumber = Math.random() * 200 - 100 // 生成 -100 到 100 之間的隨機數
+  const formattedNumber = randomNumber.toFixed(2) // 四捨五入到小數點後兩位
+  return formattedNumber
+}
+
+function getRandomElementFromArray<T>(arr: T[]): T | undefined {
+  if (!arr || arr.length === 0) {
+    return undefined // 如果輸入的陣列為空，則返回 undefined
+  }
+
+  const randomIndex = Math.floor(Math.random() * arr.length)
+  return arr[randomIndex]
+}
 
 function getRandomTimestampWithinNextTwoDays() {
   const now = Date.now() // 取得目前的時間戳記

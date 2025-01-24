@@ -7,9 +7,9 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import ErrorBoundary from '@/components/ErrorBoundary'
 import setting from '@/i18n'
 import '@/lib/cuslog'
+import ModelProvider from '@/providers/ModelProvider'
+import { ThemeProvider } from '@/providers/ThemeProvider'
 import router from '@/router/router'
-
-import { ThemeProvider } from './components/ThemeProvider'
 
 const Routes = () => {
   const routes = useRoutes(router)
@@ -25,6 +25,7 @@ const App = () => {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { staleTime: 1000 * 60 * 5 } },
   })
+
   return (
     <>
       <ThemeProvider defaultTheme="light" storageKey="vite-ui-theme">
@@ -32,7 +33,9 @@ const App = () => {
           <QueryClientProvider client={queryClient}>
             <I18nextProvider i18n={setting}>
               <BrowserRouter>
-                <Routes />
+                <ModelProvider>
+                  <Routes />
+                </ModelProvider>
               </BrowserRouter>
             </I18nextProvider>
           </QueryClientProvider>

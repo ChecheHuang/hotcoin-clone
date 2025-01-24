@@ -1,3 +1,4 @@
 {
-  "Switch Language": "Switch {{language}}"
+  "language": "language",
+  "currency": "currency"
 }

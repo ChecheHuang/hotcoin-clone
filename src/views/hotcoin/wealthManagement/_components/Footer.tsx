@@ -1,77 +1,14 @@
 import {
-  BsWechat,
   BsFacebook,
-  BsTwitterX,
-  BsTelegram,
   BsMedium,
+  BsTelegram,
+  BsTwitterX,
+  BsWechat,
 } from 'react-icons/bs'
 import { LazyLoadImage } from 'react-lazy-load-image-component'
 
+import { navigationData } from '@/config/list'
 import { imgUrl } from '@/resources/imgUrl'
-
-const navigationData = [
-  {
-    title: '关于我们',
-    items: [
-      '平台介绍',
-      '公告中心',
-      '加入我们',
-      '系统状态',
-      '用户协议',
-      '隐私条款',
-      '法律说明',
-    ],
-  },
-  {
-    title: '产品',
-    items: [
-      'NFT',
-      'Startup',
-      '理财赚币',
-      '质押借币',
-      '合约交易',
-      '现货交易',
-      '杠杆交易',
-    ],
-  },
-  {
-    title: '服务',
-    items: [
-      '一键买币',
-      '信用卡买币',
-      '申请C2C商家',
-      '好友邀请',
-      '直播',
-      'VIP权益',
-      '下载',
-      '桌面客户端',
-    ],
-  },
-  {
-    title: '支持',
-    items: [
-      'Hotcoin学院',
-      '帮助中心',
-      '在线客服',
-      '用户反馈',
-      '上市申请',
-      'API文档',
-      '费率标准',
-      '币种信息',
-      'NFT项目申请',
-      '官方验证',
-    ],
-  },
-  {
-    title: '联系我们',
-    items: [
-      '客服邮箱：Service@hotcoin.com',
-      '产品反馈：Product@hotcoin.com',
-      '商务合作：Business@hotcoin.com',
-      '司法邮箱：Casecn@hotcoin.com',
-    ],
-  },
-]
 
 const Footer = () => {
   return (
@@ -101,7 +38,7 @@ const Footer = () => {
                 <a
                   key={index}
                   href=""
-                  className="text-nowrap text-sm text-gray-500 hover:underline"
+                  className="text-gray-500 text-nowrap text-sm hover:underline"
                 >
                   {item}
                 </a>

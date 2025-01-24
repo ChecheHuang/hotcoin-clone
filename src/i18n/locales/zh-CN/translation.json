@@ -1,3 +1,4 @@
 {
-  "Switch Language": "切换{{language}}"
+  "language": "语言",
+  "currency": "货币"
 }
