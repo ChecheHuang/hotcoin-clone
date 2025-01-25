@@ -1,0 +1,1 @@
+import{j as e,L as t}from"./index-C7cmSDk-.js";const a=()=>e.jsx(e.Fragment,{children:e.jsxs("div",{className:"flex w-full items-center justify-center gap-4",children:[e.jsx(t,{to:"/hotcoin/market",children:"market"}),e.jsx(t,{to:"/hotcoin/wealthManagement",children:"wealthManagement"})]})});export{a as default};
